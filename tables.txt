@@ -1,0 +1,12 @@
+In the command line, I used the .tables command to view all the tables that are currently in the database. 
+The following tables are in the database:
+    1. auth_group
+    2. auth_group_permissions
+    3. auth_permission
+    4. auth_user
+    5. auth_user_groups
+    6. auth_user_user_permissions
+    7. django_admin_log
+    8. django_content_type
+    9. django_migrations
+    10. django_session
