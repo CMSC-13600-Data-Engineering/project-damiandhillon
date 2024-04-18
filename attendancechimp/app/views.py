@@ -22,3 +22,7 @@ def handle_form(request):
     new_course.save()
 
     return render(request, 'app/index.html', {})
+
+@csrf_exempt
+def new_user(request):
+    return render(request, 'app/create_user.html', {})
