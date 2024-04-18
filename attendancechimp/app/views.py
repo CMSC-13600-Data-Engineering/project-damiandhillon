@@ -2,10 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
+import datetime
 
 @csrf_exempt
 def index(request):
-    return render(request, 'app/index.html', {})
+    return render(request, 'app/index.html', {'todays_date': datetime.datetime.now().strftime('%B %d, %Y')})
+
+
 
 @csrf_exempt
 def handle_form(request):

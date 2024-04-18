@@ -4,10 +4,28 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
+
+  <center>
+    <h2>AttendanceChimp Dashboard</h2>
+    <h3> Welcome to our page! </h3>
+    <text> Our names are Adil & Damian and we are both fourth year data science majors </text>
+    <text> at the University of Chicago.</text>
+    <br>
+    <br>
+    Today's date is: {{todays_date}}
+    <br>
+  </center>
+
 {% if user.is_authenticated %}
   Hi {{ user.username }}!
 {% else %}
+<center>
+  <br>
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Log In</a>
+</center>
+
 {% endif %}
 {% endblock %}
+
