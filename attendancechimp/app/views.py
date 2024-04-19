@@ -30,7 +30,7 @@ def handle_form(request):
 
 @csrf_exempt
 def new_user(request):
-    if request.method == 'GET' and not request.user.is_authenticated:
+    if request.method == 'GET':
         return render(request, 'app/new_user_page.html', {})
     raise PermissionDenied
 
@@ -48,22 +48,18 @@ def create_user(request):
         if User.objects.filter(email=email).exists():
             return render(request, 'app/new_user_page.html', {'error': 'Email already in use'})
 
-        # create the user
         user, np = create_ac_user(username, email, password, is_instructor)
         
-        # save the user
         user.save()
         np.save()
         
 
-        # log the user in
         login(request, user)
         
-        ## redirect to the logged_in page
         return redirect('index')
                 
     else:
-        return render(request, 'app/new_user_page.html', {'error': 'Invalid request'})
+        return render(request, 'app/new_user_page.html', {})
     
 def logout(request):
     logout(request)
