@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+
+  <center>
+    <h2> Create a new user </h2>
+    <br>
+    <form action="http://localhost:8000/app/createUser/" method="POST">
+      {% csrf_token %}
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <br><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <br><br>
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" required>
+      <br><br>
+      <label for= "choice"> I am a:</label><br>
+      <input type="radio" id="student" name="choice" value="student" checked>
+      <label for="student">Student</label><br>
+      <input type="radio" id="instructor" name="choice" value="instructor" checked>
+      <label for="instructor">Instructor</label>
+      <br><br>
+      <input type="submit" value="Register"> 
+    </form>
+    <br>
+    <h2 style="color:red">{{error}}</h2>
+  </center>
+
+  <br> 
+
+
+{% endblock %}
