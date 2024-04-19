@@ -49,9 +49,11 @@ def create_user(request):
             return render(request, 'app/new_user_page.html', {'error': 'Email already in use'})
 
         # create the user
-        user, _ = create_ac_user(username, email, password, is_instructor)
+        user, np = create_ac_user(username, email, password, is_instructor)
+        
         # save the user
         user.save()
+        np.save()
         
 
         # log the user in
