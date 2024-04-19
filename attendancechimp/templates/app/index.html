@@ -18,16 +18,20 @@
   </center>
 
 {% if user.is_authenticated %}
+<center>
+  <br>
   Hi {{ user.username }}!
+  <a href="{% url 'logout' %}">Logout</a>
+</center>
 {% else %}
 <center>
   <br>
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Log In</a>
   <br>
-  <a href="{% url 'create_user' %}">Sign Up</a>
+  <a href="{% url 'new_user' %}">Sign Up</a>
   <br>
-  
+
 </center>
 
 {% endif %}
