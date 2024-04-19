@@ -60,7 +60,7 @@ def create_user(request):
         login(request, user)
         
         ## redirect to the logged_in page
-        return redirect('logged_in')
+        return redirect('index')
                 
     else:
         return render(request, 'app/new_user_page.html', {'error': 'Invalid request'})
