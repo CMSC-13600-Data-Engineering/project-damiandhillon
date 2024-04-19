@@ -39,7 +39,7 @@ def new_user(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
-        is_instructor = (request.POST.get("choice") == "instructor")
+        is_instructor = (request.POST.get("choice") == "Instructor")
 
         if User.objects.filter(email=email).exists():
             return render(request, 'app/new_user_page.html', {'error': 'Email already in use'})

@@ -18,6 +18,9 @@ class MemberAdmin(admin.ModelAdmin):
 
     def email(self, obj):
         return obj.user.email
+    
+    def is_instructor(self, obj):
+        return obj.is_instructor
 
     username.short_description = 'Username'
     email.short_description = 'Email'
