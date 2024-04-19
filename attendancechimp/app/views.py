@@ -32,12 +32,8 @@ def handle_form(request):
 def new_user(request):
     if request.method == 'GET':
         return render(request, 'app/new_user_page.html', {})
-    raise PermissionDenied
-
-
-@csrf_exempt
-def create_user(request):
-    if request.method == 'POST':    
+    
+    elif request.method == 'POST':    
         username = request.POST.get('username')
         password = request.POST.get('password')
         first_name = request.POST.get('first_name')
@@ -57,9 +53,36 @@ def create_user(request):
         login(request, user)
         
         return redirect('index')
+            
+    
+    raise PermissionDenied
+
+
+# @csrf_exempt
+# def create_user(request):
+#     if request.method == 'POST':    
+#         username = request.POST.get('username')
+#         password = request.POST.get('password')
+#         first_name = request.POST.get('first_name')
+#         last_name = request.POST.get('last_name')
+#         email = request.POST.get('email')
+#         is_instructor = (request.POST.get("choice") == "instructor")
+
+#         if User.objects.filter(email=email).exists():
+#             return render(request, 'app/new_user_page.html', {'error': 'Email already in use'})
+
+#         user, np = create_ac_user(username, email, password, is_instructor)
+        
+#         user.save()
+#         np.save()
+        
+
+#         login(request, user)
+        
+#         return redirect('index')
                 
-    else:
-        return render(request, 'app/new_user_page.html', {})
+#     else:
+#         return render(request, 'app/new_user_page.html', {})
     
 def logout(request):
     logout(request)

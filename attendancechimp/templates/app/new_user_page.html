@@ -7,7 +7,7 @@
   <center>
     <h2> Create a new user </h2>
     <br>
-    <form action="/app/createUser/" method="post">
+    <form action="/app/new/" method="POST">
       {% csrf_token %}
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
