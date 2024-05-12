@@ -12,7 +12,7 @@ from PIL import Image
 
 # these are django imports
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import login
 from django.core.exceptions import PermissionDenied
@@ -302,3 +302,37 @@ def qr_upload_submit(request):
 
     return render(request, 'app/index.html', {})
 
+@csrf_exempt
+def getUploads(request):
+    '''Retrieves and returns all valid QR code uploads for a given course.'''
+
+    # Check if the user is authenticated
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+
+    # Check if the 'course' parameter is provided
+    course_id = request.GET.get('course')
+    if not course_id:
+        return JsonResponse({'error': 'Missing course ID'}, status=400)
+
+    # Validate the course ID
+    try:
+        course_id = int(course_id)
+    except (TypeError, ValueError):
+        return JsonResponse({'error': 'Invalid course ID'}, status=400)
+
+    # Check if the user is an instructor
+    up = UniversityPerson.objects.filter(user_id=request.user.id).first()
+    if not up or not up.is_instructor:
+        raise PermissionDenied
+
+    # Get the valid QR code uploads for the course
+    valid_uploads = getUploadsForCourse(course_id)
+
+    # Prepare the data for response
+    uploads_data = [{
+        'username': upload.student.user.username,
+        'upload_time_as_string': upload.uploaded.strftime('%Y-%m-%d %H:%M:%S'),
+    } for upload in valid_uploads]
+
+    return JsonResponse(uploads_data, safe=False)

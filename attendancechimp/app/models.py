@@ -149,10 +149,52 @@ class QRCodeUpload(models.Model):
 
     # time stamp on upload
     uploaded = models.DateTimeField(auto_now_add=True)
+    # time stamp on upload for TESTING PURPOSES
+    # uploaded = models.DateTimeField()
 
-
+import pytz
 # this is the functionality to process an upload
 def process_upload(course, student, image):
-    upload = QRCodeUpload(course=course, student=student, image=image)
+    now = datetime.now(pytz.utc)
+    upload = QRCodeUpload(course=course, student=student, image=image, uploaded=now)
     upload.save()
     return upload
+
+from datetime import datetime
+
+def getUploadsForCourse(course_id):
+    """Returns all valid QRCodeUpload objects for a given course ID."""
+    print(f"Getting uploads for course ID: {course_id}")
+
+    # Validate the course ID
+    try:
+        course = Course.objects.get(auto_increment_id=course_id)
+        print(f"Course found: {course.name}")
+    except Course.DoesNotExist:
+        print("Course does not exist")
+        return []
+
+    # Get all QRCodeUpload objects for the course
+    uploads = QRCodeUpload.objects.filter(course=course)
+    print(f"Total uploads found: {uploads.count()}")
+
+    # Filter valid uploads
+    valid_uploads = []
+    for upload in uploads:
+        upload_day = upload.uploaded.strftime('%A')[:2]
+        upload_time = upload.uploaded.time()
+        print(f"Checking upload: {upload.student.user.username} at {upload.uploaded} (day: {upload_day}, time: {upload_time})")
+
+        if (upload_day == 'Mo' and course.m_class) or \
+           (upload_day == 'Tu' and course.tu_class) or \
+           (upload_day == 'We' and course.w_class) or \
+           (upload_day == 'Th' and course.th_class) or \
+           (upload_day == 'Fr' and course.f_class):
+            
+            if course.class_start <= upload_time <= course.class_end:
+                valid_uploads.append(upload)
+                print(f"Valid upload: {upload.student.user.username} at {upload.uploaded}")
+
+    print(f"Total valid uploads: {len(valid_uploads)}")
+    return valid_uploads
+
