@@ -1,5 +1,0 @@
-The GPT model combines the student and instructor tables into one called user, which simplifies the model.
-It introduced a course participation table, which builds on the enrollment table, but this time tracking completion and dropping of courses.
-It also combined QR code and attendance records into one single table.
-It overall had the same completeness, but less tables and simpler relationships. 
-But I feel having seperate tables for QR and attendance can be benefitial in the future if we want to make changes about how our data is handled.
