@@ -150,7 +150,7 @@ class QRCodeUpload(models.Model):
     # time stamp on upload
     uploaded = models.DateTimeField(auto_now_add=True)
     # time stamp on upload for TESTING PURPOSES
-    # uploaded = models.DateTimeField()
+    #uploaded = models.DateTimeField()
 
 import pytz
 # this is the functionality to process an upload
